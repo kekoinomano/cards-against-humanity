@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cards Against Humanity</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Juego realizado por Eugenia y Sergio. Amantes de corazón y fetoneros de vocación.">
+  <meta name="author" content="Sergio Alvarez" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" href="src/styles.css">
+    <link rel="shortcut icon" href="src/ruleta.png" />
+    <meta property="og:site_name" content="Cards Against Humanity">
+<meta property="og:title" content="Cards Against Humanity" />
+<meta property="og:description" content="Juego realizado por Eugenia y Sergio. Amantes de corazón y fetoneros de vocación." />
+<meta property="og:image" itemprop="image" content="https://risas.wakeapp.org/src/cartas.jpg">
+<meta property="og:type" content="website" />
+<meta property="og:updated_time" content="1440432930" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+  </head>
+
+  <body>
+    <script>
+
+</script>
+    <script type="text/javascript">
+        var contador = 0;
+    </script>
+    
+    <div class="container2">
+      <div class="frase" style="margin-bottom: 100px;">Cards Against Humanity</div>
+      <div class="centrado">
+      <div class="nombre">Nombre<br>
+        <input type="text" name="nombre" id="nombre" class="frase" placeholder="________" style="margin: 6px auto 10px auto;">
+      </div>
+        <div class="sala1">
+            <button onclick="nueva_partida()" class="botonfrase"> Crear partida</button>
+            
+        </div>
+        <div class="sala1">
+            <button onclick="abrir_codigo()"class="botonfrase"> Unirme</button>
+        </div>
+        <div class="oculto"id="oculto">Código<br>
+              
+              <input type="number" name="codigo" id="codigo" class="frase" placeholder="_____"style="margin: 6px auto 10px auto;"><br>
+
+              <button onclick="comprobar()"class="botonfrase" style="margin: 15px auto;">Jugar</button>
+              <div class="nocodigo" id="nocodigo"> El codigo no existe</div>
+        </div>
+        <div class="nocodigo" id="nonombre"> Introduce un nombre</div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript">
+      function nueva_partida(){
+        var nombre=document.getElementById('nombre').value;
+        if (nombre){
+          //alert(nombre);
+          var nombre=document.getElementById('nombre').value;
+          var crearsala = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          crearsala.open("POST","/funciones/crearsala.php",true);
+          crearsala.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          crearsala.send('nombre='+nombre);
+
+          crearsala.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              obj= JSON.parse(this.responseText);
+              console.log(obj);
+              window.location.href = obj.url;
+            }
+          };
+      }else{
+        document.getElementById('nonombre').style.display="block";
+      }
+    }
+        function abrir_codigo() {
+          document.getElementById('oculto').style.display = "block";
+        }
+        function comprobar(){
+          var nombre=document.getElementById('nombre').value;
+          var codigo=document.getElementById('codigo').value;
+
+          var xmlhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          xmlhttp.onreadystatechange = function() {
+            if(nombre){
+              if (this.readyState == 4 && this.status == 200) {
+              //document.getElementById("txtHint").innerHTML = this.responseText;
+              console.log(this.responseText);
+              const consulta = JSON.parse(this.responseText);
+              console.log(consulta.token);
+              console.log(consulta.nombre);
+              console.log(consulta.id);
+              if (consulta.token !=0){
+
+              window.location.href= "https://risas.wakeapp.org/sala/" + consulta.token + "/";
+              }else{
+                document.getElementById('nocodigo').style.display = "block";
+              }
+            }
+            }else{
+              document.getElementById('nonombre').style.display="block";
+            }
+            
+          };
+          xmlhttp.open("POST","/funciones/comprobarcodigo.php",true);
+          xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xmlhttp.send('codigo='+codigo + '&' + 'nombre=' + nombre);
+          //const consulta = JSON.parse("'" + this.responseText + "'");
+          //alert(this.responseText);
+
+        }
+
+    </script>
+  </body>
+</html>

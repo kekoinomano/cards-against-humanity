@@ -1,0 +1,35 @@
+Options +FollowSymLinks -MultiViews
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|tpl)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+<Files config.php>
+Order allow,deny
+Deny from all
+</Files>
+# Cache Control
+<IfModule mod_headers.c>
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|css|js)$">
+    Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+</IfModule>
+
+RewriteEngine on
+RewriteOptions MaxRedirects=1
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule .* - [L]
+
+# Nueva partida
+RewriteRule ^nuevapartida?$ nuevapartida.html [L]
+
+
+# Sala
+RewriteRule ^sala?$ sala.html [L]
+RewriteRule ^sala/([^/]+)/?$ salita.php?token=$1 [L]
+
+# Juego
+RewriteRule ^juego/([^/]+)/?$ juego.php?token=$1 [L]
+
+# meter
+RewriteRule ^meter?$ nuevomeme.html? [L]

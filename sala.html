@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MeMeme</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Juego realizado por Eugenia y Sergio. Amantes de corazón y fetoneros de vocación.">
+  <meta name="author" content="Sergio Alvarez" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" href="../../src/styles.css">
+    <link rel="shortcut icon" href="../../src/ruleta.png" />
+    <meta property="og:site_name" content="Churrileta">
+<meta property="og:title" content="Churrileta" />
+<meta property="og:description" content="Juego realizado por Eugenia y Sergio. Amantes de corazón y fetoneros de vocación." />
+<meta property="og:image" itemprop="image" content="https://churrileta.wakeapp.org/src/ruleta.png">
+<meta property="og:type" content="website" />
+<meta property="og:updated_time" content="1440432930" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+        var contador = 0;
+    </script>
+
+    <div id="elnumero">0</div>
+  </body>
+
+
+
+<script type="text/javascript">
+var onlineVisitorsCounterScriptPath = function ()
+{
+    var scripts = document.getElementsByTagName('script');
+    var path = '';
+    if (scripts && scripts.length > 0)
+    {
+        for (var i in scripts)
+        {
+            if (scripts[i].src && scripts[i].src.match(/\/counter\.js$/))
+            {
+                path = scripts[i].src.replace(/(.*)\/counter\.js$/, '$1');
+                break;
+            }
+        }
+    }
+    return path;
+};
+function updateOnlineVisitorsCounter()
+{
+    var page_title = window.document.title;
+    var page_url = window.location.href;
+    var xmlhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+    xmlhttp.onreadystatechange = function ()
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+        {
+            document.getElementById('elnumero').innerHTML = xmlhttp.responseText;
+        }
+    };
+
+    xmlhttp.open('POST', onlineVisitorsCounterScriptPath() +  '/contador/contador.php', true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send('page_title=' + encodeURIComponent(page_title) + '&' + 'page_url=' + encodeURIComponent(page_url));
+    setTimeout(updateOnlineVisitorsCounter, 5000);
+
+}
+
+updateOnlineVisitorsCounter();
+
+
+function usuarios()
+{
+    var page_title = window.document.title;
+    var page_url = window.location.href;
+    var xmlhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+    xmlhttp.onreadystatechange = function ()
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+        {
+            document.getElementById('elnumero').innerHTML = xmlhttp.responseText;
+        }
+    };
+
+    xmlhttp.open('POST', onlineVisitorsCounterScriptPath() +  '/contador/counter.php', true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send('page_title=' + encodeURIComponent(page_title) + '&' + 'page_url=' + encodeURIComponent(page_url));
+    setTimeout(updateOnlineVisitorsCounter, 5000);
+
+}
+
+</script>
+</html>

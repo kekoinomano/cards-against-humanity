@@ -11,7 +11,7 @@ if (isset($_REQUEST['token'])){
 
 	$avg = array('votos' => $votos,'propietarios' => $propietarios,'token' => $token);
 	echo return_json($avg);
-}
+}//ineeg
 else{
 	$avg = array('token' => 0,'nombre' => 0,'id' => 0);
 	echo return_json($avg);
